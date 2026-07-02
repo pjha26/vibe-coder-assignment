@@ -83,6 +83,7 @@ export function ProfileDetailPage() {
               <img
                 src={user.picture}
                 alt={`${user.username} profile`}
+                referrerPolicy="no-referrer"
                 className="w-full h-full object-cover grayscale opacity-90"
               />
             </div>

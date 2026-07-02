@@ -56,7 +56,7 @@ export function ShortlistSidebar({ isOpen, onClose }: ShortlistSidebarProps) {
                 <div className="font-mono text-xs uppercase tracking-widest text-scout-ink-muted mb-2">Shortlisted Candidates</div>
                 {shortlisted.map((profile) => (
                   <div key={profile.user_id} className="flex items-center gap-4 bg-scout-bg border border-scout-border p-3 rounded group hover:border-scout-ink-muted transition-colors">
-                    <img src={profile.picture} alt={`${profile.username} profile`} className="w-12 h-12 rounded object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all" />
+                    <img src={profile.picture} alt={`${profile.username} profile`} referrerPolicy="no-referrer" className="w-12 h-12 rounded object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all" />
                     <div className="flex-1 min-w-0">
                       <div className="font-serif font-bold text-lg truncate text-scout-ink">{profile.fullname || profile.username}</div>
                       <div className="font-mono text-[10px] text-scout-violet uppercase truncate">@{profile.username}</div>
