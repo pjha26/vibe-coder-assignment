@@ -1,5 +1,7 @@
 # Wobb Frontend Assignment
 
+**🟢 Live Demo:** [https://vibe-coder-assignment-gilt.vercel.app/](https://vibe-coder-assignment-gilt.vercel.app/)
+
 A starter influencer search application built with **React**, **TypeScript**, **Vite**, and **Tailwind CSS**. This project is intentionally left in a rough-but-working state for candidates to improve.
 
 ## Getting Started
