@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
 import type { Platform, UserProfileSummary } from "@/types";
 import { formatFollowers } from "@/utils/formatters";
 import { VerifiedBadge } from "./VerifiedBadge";
@@ -13,6 +13,7 @@ interface ProfileCardProps {
   platform: Platform;
 
   onProfileClick?: (username: string) => void;
+  variants?: Variants;
 }
 
 export const ProfileCard = memo(function ProfileCard({
@@ -20,6 +21,7 @@ export const ProfileCard = memo(function ProfileCard({
   platform,
 
   onProfileClick,
+  variants,
 }: ProfileCardProps) {
   const navigate = useNavigate();
   const isShortlisted = useShortlistStore((state) => state.isShortlisted(profile.user_id));
@@ -44,7 +46,7 @@ export const ProfileCard = memo(function ProfileCard({
       tabIndex={0}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
-
+      variants={prefersReducedMotion ? undefined : variants}
       whileHover={prefersReducedMotion ? {} : { scale: 1.02, boxShadow: "0 10px 30px -10px rgba(167, 139, 250, 0.15)" }}
       whileFocus={prefersReducedMotion ? {} : { scale: 1.02, boxShadow: "0 10px 30px -10px rgba(167, 139, 250, 0.15)" }}
       transition={{ duration: 0.2, ease: "easeOut" }}
