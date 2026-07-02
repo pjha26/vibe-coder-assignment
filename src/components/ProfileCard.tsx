@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import type { Platform, UserProfileSummary } from "@/types";
@@ -10,14 +11,14 @@ import { Plus, Check } from "lucide-react";
 interface ProfileCardProps {
   profile: UserProfileSummary;
   platform: Platform;
-  searchQuery: string;
+
   onProfileClick?: (username: string) => void;
 }
 
-export function ProfileCard({
+export const ProfileCard = memo(function ProfileCard({
   profile,
   platform,
-  searchQuery,
+
   onProfileClick,
 }: ProfileCardProps) {
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ export function ProfileCard({
       tabIndex={0}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
-      data-search={searchQuery}
+
       whileHover={prefersReducedMotion ? {} : { scale: 1.02, boxShadow: "0 10px 30px -10px rgba(167, 139, 250, 0.15)" }}
       whileFocus={prefersReducedMotion ? {} : { scale: 1.02, boxShadow: "0 10px 30px -10px rgba(167, 139, 250, 0.15)" }}
       transition={{ duration: 0.2, ease: "easeOut" }}
@@ -55,6 +56,7 @@ export function ProfileCard({
           src={profile.picture} 
           alt={`${profile.username} profile picture`} 
           referrerPolicy="no-referrer"
+          loading="lazy"
           className="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 group-focus:grayscale-0 group-focus:opacity-100 transition-all duration-500" 
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
@@ -97,4 +99,4 @@ export function ProfileCard({
       </div>
     </motion.div>
   );
-}
+});

@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import type { Platform } from "@/types";
 import { Layout } from "@/components/Layout";
 import { PlatformTabs } from "@/components/PlatformTabs";
@@ -15,6 +15,11 @@ export function SearchPage() {
     () => filterProfiles(allProfiles, searchQuery),
     [allProfiles, searchQuery]
   );
+
+  const handlePlatformChange = useCallback((p: Platform) => {
+    setPlatform(p);
+    setSearchQuery("");
+  }, []);
 
   return (
     <Layout title="Curated Discoveries">
@@ -35,10 +40,7 @@ export function SearchPage() {
 
       <PlatformTabs
         selected={platform}
-        onChange={(p) => {
-          setPlatform(p);
-          setSearchQuery("");
-        }}
+        onChange={handlePlatformChange}
       />
 
       <div className="mb-6 border-b border-scout-border pb-2 flex justify-between items-end">
@@ -50,7 +52,6 @@ export function SearchPage() {
       <ProfileList
         profiles={filtered}
         platform={platform}
-        searchQuery={searchQuery}
       />
     </Layout>
   );

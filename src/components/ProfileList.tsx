@@ -1,3 +1,4 @@
+import { memo } from "react";
 import type { Platform, UserProfileSummary } from "@/types";
 import { ProfileCard } from "./ProfileCard";
 
@@ -5,13 +6,13 @@ import { ProfileCard } from "./ProfileCard";
 interface ProfileListProps {
   profiles: UserProfileSummary[];
   platform: Platform;
-  searchQuery: string;
+
 }
 
-export function ProfileList({
+export const ProfileList = memo(function ProfileList({
   profiles,
   platform,
-  searchQuery,
+
 }: ProfileListProps) {
   if (profiles.length === 0) {
     return (
@@ -28,9 +29,9 @@ export function ProfileList({
           key={profile.user_id}
           profile={profile}
           platform={platform}
-          searchQuery={searchQuery}
+
         />
       ))}
     </div>
   );
-}
+});

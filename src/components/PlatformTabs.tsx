@@ -1,4 +1,4 @@
-
+import { memo } from "react";
 import type { Platform } from "@/types";
 import { PLATFORMS, getPlatformLabel } from "@/utils/dataHelpers";
 
@@ -7,7 +7,7 @@ interface PlatformTabsProps {
   onChange: (platform: Platform) => void;
 }
 
-export function PlatformTabs({ selected, onChange }: PlatformTabsProps) {
+export const PlatformTabs = memo(function PlatformTabs({ selected, onChange }: PlatformTabsProps) {
   return (
     <div className="flex gap-2 flex-wrap mb-8">
       {PLATFORMS.map((p) => {
@@ -29,4 +29,4 @@ export function PlatformTabs({ selected, onChange }: PlatformTabsProps) {
       })}
     </div>
   );
-}
+});

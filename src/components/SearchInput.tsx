@@ -1,4 +1,4 @@
-
+import { memo } from "react";
 import { Search } from 'lucide-react';
 
 interface SearchInputProps {
@@ -7,7 +7,7 @@ interface SearchInputProps {
   placeholder?: string;
 }
 
-export function SearchInput({ value, onChange, placeholder = "Search..." }: SearchInputProps) {
+export const SearchInput = memo(function SearchInput({ value, onChange, placeholder = "Search..." }: SearchInputProps) {
   return (
     <div className="flex items-center bg-scout-surface-high border border-scout-border rounded px-4 py-2 w-full max-w-md group hover:border-scout-ink-muted transition-colors">
       <Search className="text-scout-ink-muted w-5 h-5 mr-2" />
@@ -20,4 +20,4 @@ export function SearchInput({ value, onChange, placeholder = "Search..." }: Sear
       />
     </div>
   );
-}
+});
