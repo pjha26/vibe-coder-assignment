@@ -1,113 +1,81 @@
 @import "tailwindcss";
 
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+@theme {
+  --font-sans: 'Inter', sans-serif;
+  --font-serif: 'Playfair Display', serif;
+  --font-mono: 'JetBrains Mono', monospace;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  /* Custom palette mapping for "Dark Noir" Scout theme */
+  --color-scout-bg: var(--scout-bg);
+  --color-scout-surface: var(--scout-surface);
+  --color-scout-surface-high: var(--scout-surface-high);
+  --color-scout-ink: var(--scout-ink);
+  --color-scout-ink-muted: var(--scout-ink-muted);
+  --color-scout-violet: var(--scout-violet);
+  --color-scout-green: var(--scout-green);
+  --color-scout-border: var(--scout-border);
 }
 
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+    /* DEFAULT: Dark Noir Theme */
+    --scout-bg: #0F0F0F;
+    --scout-surface: #1a1a1a;
+    --scout-surface-high: #2a2a2a;
+    --scout-ink: #fcf9f8;
+    --scout-ink-muted: #a8a2b1; /* WCAG Corrected from #4a4455 */
+    --scout-violet: #A78BFA;
+    --scout-green: #10b981;
+    --scout-border: rgba(255, 255, 255, 0.1);
   }
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
+  @media (prefers-color-scheme: light) {
+    :root {
+      /* SECONDARY: Light Theme */
+      --scout-bg: #fdfdfc; 
+      --scout-surface: #ffffff; 
+      --scout-surface-high: #f6f3f2;
+      --scout-ink: #1c1b1b; 
+      --scout-ink-muted: #4a4455; 
+      --scout-violet: #6d28d9; 
+      --scout-green: #059669;
+      --scout-border: rgba(28, 27, 27, 0.15); 
+    }
+  }
+
+  body {
+    background-color: var(--scout-bg);
+    color: var(--scout-ink);
+    @apply font-sans antialiased;
   }
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-}
-
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+@layer utilities {
+  .ambient-glow {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid var(--scout-border);
+    border-bottom: 1px solid var(--scout-border);
   }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
+  
+  .ambient-glow:hover, .ambient-glow:focus-visible {
+    box-shadow: 0 10px 30px -10px rgba(167, 139, 250, 0.15);
+    border-bottom: 2px solid var(--scout-violet);
+    transform: scale(1.02);
+    outline: none; /* We use border for focus in this specific card style */
   }
-}
-p {
-  margin: 0;
-}
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+  @media (prefers-color-scheme: light) {
+    .ambient-glow:hover, .ambient-glow:focus-visible {
+      box-shadow: 0 10px 30px -10px rgba(109, 40, 217, 0.15);
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .ambient-glow {
+      transition: none;
+    }
+    .ambient-glow:hover, .ambient-glow:focus-visible {
+      transform: none;
+    }
+  }
 }

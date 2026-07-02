@@ -1,6 +1,0 @@
-feat: add Zustand shortlist store and Add to List feature
-
-- New useShortlistStore with persist middleware (localStorage)
-- Prevents duplicate entries by user_id
-- Wired up Add/Remove buttons on cards and detail page
-- Added a way to view and manage the full shortlist

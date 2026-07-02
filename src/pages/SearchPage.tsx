@@ -1,7 +1,8 @@
 import { useState, useMemo } from "react";
 import type { Platform } from "@/types";
 import { Layout } from "@/components/Layout";
-import { PlatformFilter } from "@/components/PlatformFilter";
+import { PlatformTabs } from "@/components/PlatformTabs";
+import { SearchInput } from "@/components/SearchInput";
 import { ProfileList } from "@/components/ProfileList";
 import { extractProfiles, filterProfiles } from "@/utils/dataHelpers";
 
@@ -16,24 +17,35 @@ export function SearchPage() {
   );
 
   return (
-    <Layout title="Find Influencers">
-      <p className="text-gray-500 mb-4 text-sm">
-        Browse top creators across social platforms
-      </p>
+    <Layout title="Curated Discoveries">
+      <div className="mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+        <div>
+          <p className="font-sans text-base text-scout-ink-muted">
+            High-engagement creators trending in their niche.
+          </p>
+        </div>
+        <div className="w-full md:w-auto">
+          <SearchInput
+            value={searchQuery}
+            onChange={setSearchQuery}
+            placeholder="Search creators, niches..."
+          />
+        </div>
+      </div>
 
-      <PlatformFilter
+      <PlatformTabs
         selected={platform}
         onChange={(p) => {
           setPlatform(p);
           setSearchQuery("");
         }}
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
       />
 
-      <p className="text-xs text-gray-400 mb-2">
-        Showing {filtered.length} of {allProfiles.length} on {platform}
-      </p>
+      <div className="mb-6 border-b border-scout-border pb-2 flex justify-between items-end">
+        <p className="text-xs text-scout-ink-muted uppercase tracking-widest font-mono">
+          Showing {filtered.length} Profiles
+        </p>
+      </div>
 
       <ProfileList
         profiles={filtered}
