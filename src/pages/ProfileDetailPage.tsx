@@ -53,8 +53,12 @@ export function ProfileDetailPage() {
   if (!profileData) {
     return (
       <Layout title="Error">
-        <div className="py-20 text-center">
-          <p className="text-red-500 mb-6">Could not load profile details for {username}</p>
+        <div className="py-20 text-center px-4">
+          <p className="text-scout-ink-muted mb-2 text-lg">Mock profile data not found</p>
+          <p className="text-scout-ink-muted/60 mb-8 max-w-md mx-auto text-sm leading-relaxed">
+            The starter repository only provided detailed JSON files for 6 of the 30 search results. 
+            Detailed data for <b className="text-scout-ink">@{username}</b> was not included in the provided dataset.
+          </p>
           <Link to="/" className="text-scout-violet hover:underline flex items-center justify-center gap-2">
             <ArrowLeft className="w-4 h-4" /> Back to Search
           </Link>
