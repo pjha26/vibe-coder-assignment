@@ -2,7 +2,7 @@
 
 **🟢 Live Demo:** [https://vibe-coder-assignment-gilt.vercel.app/](https://vibe-coder-assignment-gilt.vercel.app/)
 
-A starter influencer search application built with **React**, **TypeScript**, **Vite**, and **Tailwind CSS**. This project is intentionally left in a rough-but-working state for candidates to improve.
+A highly optimized influencer search application built with **React**, **TypeScript**, **Vite**, and **Tailwind CSS**.
 
 ## Getting Started
 
@@ -12,74 +12,57 @@ npm run dev
 ```
 
 Open [http://localhost:5173](http://localhost:5173) to view the app.
+Run `npm run test` to execute the unit test suite.
 
-## What's Included
+---
 
-- **Search / Dashboard** — filter influencers by platform (Instagram, YouTube, TikTok) and search by username or full name
-- **Profile Details** — click a profile to view extended data loaded from individual JSON files
-- **Routing** — `react-router-dom` with `/` (search) and `/profile/:username` (details)
+## Bonus Items Completed
 
-Sample data lives in:
+- **Deployed Application:** The app is fully deployed to Vercel with proper React Router fallback rewrite rules.
+- **Improved Accessibility:** Added missing `alt` attributes on all images, corrected a WCAG AA contrast failure, added focus-visible rings for keyboard navigation, and strictly respected system `prefers-reduced-motion` settings.
+- **Animations & Micro-interactions:** Added highly optimized, hardware-accelerated layout transitions and drawer spring-animations.
+- **Written Tests:** Set up Vitest and wrote focused unit tests covering the highest-risk business logic (Zustand state, data filtering, and formatting math).
 
-- `src/assets/data/search/` — platform search results (10 profiles each)
-- `src/assets/data/profiles/` — detailed profile JSON per username
+## What I Changed
 
-## How to Submit
+- **Fixed Critical Bugs:**
+  - **Dependency conflict:** Removed `react-beautiful-dnd` as it was completely unused but broke a clean `npm install` due to React 19 peer dependency conflicts.
+  - **Layout & Accessibility:** Fixed a hardcoded `w-[700px]` fixed-width card that broke on narrower screens, making it fully responsive. Added missing `alt` attributes to all avatars.
+  - **Broken images:** Resolved 403 Forbidden errors on YouTube profile pictures by correctly configuring `referrerPolicy="no-referrer"`.
+  - **Data displaying incorrectly:** Fixed the "Engagements" stat which was incorrectly displaying the engagement *rate* a second time instead of the actual count. Also fixed a math error in the engagement rate formatter itself.
+  - **Search logic:** Fixed case-sensitive username searches (making them consistent with case-insensitive fullname matches) and fixed a bug where whitespace-only queries incorrectly returned an empty array instead of all profiles.
+- **Implemented Zustand Shortlist:** Replaced the non-functional React Context stub with a persistent (localStorage) Zustand store. It strictly prevents duplicate entries by `user_id` and wires up Add/Remove functionality across both the grid and the dedicated Shortlist Drawer.
+- **Complete Visual Redesign:** Replaced the generic starter UI with a bespoke "Scout" (Dark Noir) design system, utilizing a cohesive token-based CSS variable approach.
+- **Performance Optimizations:** 
+  - Added strict `React.memo` boundaries to prevent massive DOM re-rendering cascades when typing in the search bar.
+  - Eliminated `searchQuery` prop-drilling entirely.
+  - Added `loading="lazy"` to all off-screen influencer avatars to improve initial paint time.
+- **Testing Setup:** Integrated Vitest and JSDOM, writing test suites to guarantee the integrity of the core utility functions and state store.
 
-1. **Download or clone** this starter project to your machine.
-2. **Create a new repository** on your own GitHub account. Do not fork the original assignment repo — push your work to a repo you own.
-3. Complete the tasks below and push your changes to that repository.
-4. **Share the public GitHub repository URL** with us as your submission.
+## Libraries Added
 
-### Deadline (strict)
+- **`zustand`**: Chosen to implement persistent shortlist state management without the massive re-render penalties associated with React Context.
+- **`framer-motion`**: Added for performant, hardware-accelerated animations (drawer slides, layout shifts) that compute outside the React render loop.
+- **`lucide-react`**: Replaced heavy Material icon fonts with lightweight, tree-shakeable SVGs for a smaller bundle footprint.
+- **`clsx`**: Used for clean, dynamic class name merging for conditional component styling.
+- **`vitest`**: Selected as a highly performant, Vite-native testing framework that required zero complex configuration.
+- **`@testing-library/react`**: Standard utility included for potential component rendering tests.
 
-- **Due:** **2 July 2026, 2:00 PM IST** (Indian Standard Time, UTC+5:30)
-- **Any git commits made after this deadline will disqualify your submission.** We will only consider the repository state as of the deadline; late commits will not be reviewed.
-- Make sure your final work is pushed **before** the cutoff.
+## Assumptions
 
-## AI Usage
+- **Persistence:** Assumed `localStorage` persistence is sufficient for the Shortlist feature since there is no backend or database attached to the assignment.
+- **Data Mutability:** Assumed the static JSON mock data files should remain read-only, meaning I should not attempt to implement "mutations" to the raw static data files.
+- **Theme:** Assumed a forced dark-first theme best fit the intended "Noir" design direction, prioritizing it over a strict adherence to `prefers-color-scheme` (which is kept only as a secondary fallback).
 
-You may use any AI tools (Cursor, ChatGPT, Claude, GitHub Copilot, etc.). We are evaluating your final solution and engineering decisions.
+## Trade-offs
 
-## Your Tasks
+- **Test Coverage Scope:** Deliberately scoped unit tests strictly to the highest-risk pure logic (the Zustand store, search filtering, and math formatting) rather than writing brittle UI/snapshot tests, prioritizing engineering value over raw coverage percentage.
+- **Pagination/Infinite Scroll:** Opted out of implementing complex pagination for the search results, trading it for simplicity since the provided mock dataset is relatively small (10 profiles per platform).
 
-Complete the following as part of your submission:
+## Remaining Improvements
 
-1. **Find and fix all bugs and quality issues** — the codebase contains intentional bugs and quality issues. Identify and resolve them.
-
-2. **Completely redesign the UI/UX** — replace the basic layout with a polished, modern interface. Focus on usability, visual hierarchy, and delight.
-
-3. **Replace React Context with Zustand** — when you implement state management for the selected list, use [Zustand](https://github.com/pmndrs/zustand) instead of React Context.
-
-4. **Implement "Select profile & Add to List"** — the disabled "Add to List" button is a stub. Build the full feature:
-   - Select / add profiles to a persistent list
-   - View and manage the selected list
-   - Handle duplicates appropriately
-
-5. **Improve code quality and project structure** — refactor as needed, add proper types, and follow React best practices.
-
-6. **Optimize performance** — apply sensible optimizations where appropriate.
-
-7. **Use any libraries you need** — you are not limited to the current stack. Choose tools that help you deliver a great result (UI kits, state managers, testing libraries, etc.).
-
-## Scripts
-
-| Command        | Description              |
-| -------------- | ------------------------ |
-| `npm run dev`  | Start development server |
-| `npm run build`| Production build         |
-| `npm run lint` | Run ESLint               |
-
-## Submission Notes
-
-- Document any assumptions or trade-offs in your README
-- Ensure `npm run build` passes before submitting
-- Focus on demonstrating your judgment — not every possible feature needs to be built, but the core assignment items should be addressed thoughtfully
-- Double-check that your repo is public (or that we have access) and that the link is included in your submission
-- Please make meaningful commits throughout your work. We may review your commit history.
-- **Bonus:** Deploying the app (e.g. Vercel, Netlify, GitHub Pages) is optional but will be considered a plus — include the live URL in your submission if you do
-
-Good luck!
+- **E2E Testing:** With more time, I would add Playwright for end-to-end user flow testing to verify the actual UI interaction of adding a user to the shortlist drawer.
+- **Advanced Filtering:** Add multi-faceted filters (e.g., filtering by exact follower ranges or engagement rate thresholds) beyond simple string matching.
 
 ## Engineering Decisions & Implementation Notes
 
