@@ -78,3 +78,22 @@ Complete the following as part of your submission:
 - **Bonus:** Deploying the app (e.g. Vercel, Netlify, GitHub Pages) is optional but will be considered a plus — include the live URL in your submission if you do
 
 Good luck!
+
+## Engineering Decisions & Implementation Notes
+
+### 1. Design System (Stitch MCP Integration)
+The entire visual redesign ("Scout" / Dark Noir direction) was implemented by pulling raw design tokens, DOM structures, and component references directly from a designated **Stitch** design project via MCP. Rather than eyeballing a screenshot, the interface is built on precise, token-driven CSS variables. 
+
+### 2. Theming & Accessibility
+*   **Dark-First Theme:** The application abandons standard `prefers-color-scheme` reliance in favor of an explicitly dark-first default theme to match the intended "Noir" aesthetic, keeping a light theme as a fallback.
+*   **WCAG Contrast Correction:** During implementation, the Stitch token `on-surface-variant` (`#4a4455`) against the background `#0F0F0F` resulted in an accessibility failure (approx. 2:1 contrast ratio). To preserve the intended violet-gray hue while ensuring legibility, this token was corrected to `#a8a2b1` (approx. 7.7:1), fully passing WCAG AA standards.
+*   **Reduced Motion:** All layout-shifting animations respect `prefers-reduced-motion` at the system level.
+
+### 3. State & Performance
+*   **Zustand:** Replaced React Context with Zustand (using `persist` middleware to save to `localStorage`). Selectors are strictly primitive to prevent unnecessary re-renders.
+*   **Render Optimization:** `searchQuery` prop-drilling was eliminated to prevent massive re-render cascades on keystrokes. Aggressive use of `React.memo` and `useCallback` ensures only the necessary components re-render during state changes.
+*   **Image Lazy Loading:** Implemented `loading="lazy"` on all off-screen avatars to improve initial load performance. Added `referrerPolicy="no-referrer"` to resolve 403 Forbidden errors from YouTube CDNs.
+
+### 4. New Dependencies
+*   **Framer Motion:** Added to implement the complex layout interactions (e.g., spring slide-in for the Shortlist drawer, hardware-accelerated hover states on cards). Framer Motion was specifically chosen because it computes hover/focus states outside of React's render loop, avoiding expensive re-renders.
+*   **Lucide React:** Replaced heavy icon fonts with tree-shakeable SVG icons for a smaller bundle footprint.
