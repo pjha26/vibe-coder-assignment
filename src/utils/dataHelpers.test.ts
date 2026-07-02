@@ -12,6 +12,7 @@ describe('dataHelpers.ts', () => {
         picture: '',
         is_verified: true,
         followers: 1000,
+        url: 'https://youtube.com/@mrbeast',
       },
       {
         user_id: '2',
@@ -20,6 +21,7 @@ describe('dataHelpers.ts', () => {
         picture: '',
         is_verified: true,
         followers: 2000,
+        url: 'https://youtube.com/@tseries',
       }
     ];
 

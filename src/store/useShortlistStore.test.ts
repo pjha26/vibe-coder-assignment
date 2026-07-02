@@ -10,6 +10,7 @@ describe('useShortlistStore', () => {
     picture: '',
     is_verified: false,
     followers: 100,
+    url: 'https://example.com/user1',
   };
 
   const mockProfile2: UserProfileSummary = {
@@ -19,6 +20,7 @@ describe('useShortlistStore', () => {
     picture: '',
     is_verified: true,
     followers: 200,
+    url: 'https://example.com/user2',
   };
 
   beforeEach(() => {
