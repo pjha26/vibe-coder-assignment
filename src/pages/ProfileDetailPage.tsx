@@ -5,6 +5,7 @@ import { VerifiedBadge } from "@/components/VerifiedBadge";
 import type { FullUserProfile, ProfileDetailResponse } from "@/types";
 import { formatEngagementRate, formatFollowers } from "@/utils/formatters";
 import { loadProfileByUsername } from "@/utils/profileLoader";
+import { useShortlistStore } from "@/store/useShortlistStore";
 
 
 export function ProfileDetailPage() {
@@ -15,6 +16,11 @@ export function ProfileDetailPage() {
     null
   );
   const [loaded, setLoaded] = useState(false);
+
+  const isShortlisted = useShortlistStore((state) =>
+    profileData ? state.isShortlisted(profileData.data.user_profile.user_id) : false
+  );
+  const toggleProfile = useShortlistStore((state) => state.toggleProfile);
 
   useEffect(() => {
     if (!username) return;
@@ -142,12 +148,14 @@ export function ProfileDetailPage() {
             </a>
           )}
 
-          {/* TODO: candidates must implement Add to List feature */}
+
           <button
-            disabled
-            className="block mt-4 px-4 py-2 bg-gray-300 text-gray-500 rounded cursor-not-allowed"
+            className={`block mt-4 px-4 py-2 rounded ${
+              isShortlisted ? "bg-red-100 text-red-600" : "bg-blue-600 text-white"
+            }`}
+            onClick={() => toggleProfile(user)}
           >
-            Add to List
+            {isShortlisted ? "Remove from List" : "Add to List"}
           </button>
         </div>
       </div>

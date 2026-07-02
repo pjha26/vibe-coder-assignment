@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import type { Platform, UserProfileSummary } from "@/types";
 import { formatFollowers } from "@/utils/formatters";
 import { VerifiedBadge } from "./VerifiedBadge";
+import { useShortlistStore } from "@/store/useShortlistStore";
 
 interface ProfileCardProps {
   profile: UserProfileSummary;
@@ -19,6 +20,8 @@ export function ProfileCard({
   onProfileClick,
 }: ProfileCardProps) {
   const navigate = useNavigate();
+  const isShortlisted = useShortlistStore((state) => state.isShortlisted(profile.user_id));
+  const toggleProfile = useShortlistStore((state) => state.toggleProfile);
 
   const handleClick = () => {
     if (onProfileClick) onProfileClick(profile.username);
@@ -50,13 +53,17 @@ export function ProfileCard({
         <div className="text-sm text-gray-600">{profile.fullname}</div>
         <div className="text-sm">{formatFollowers(profile.followers)} followers</div>
       </div>
-      {/* TODO: candidates must implement Add to List feature */}
+
       <button
-        disabled
-        className="px-3 py-1 bg-gray-300 text-gray-500 text-sm rounded cursor-not-allowed"
-        onClick={(e) => e.stopPropagation()}
+        className={`px-3 py-1 text-sm rounded ${
+          isShortlisted ? "bg-red-100 text-red-600" : "bg-blue-600 text-white"
+        }`}
+        onClick={(e) => {
+          e.stopPropagation();
+          toggleProfile(profile);
+        }}
       >
-        Add to List
+        {isShortlisted ? "Remove from List" : "Add to List"}
       </button>
     </div>
   );
