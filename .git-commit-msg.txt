@@ -1,0 +1,11 @@
+fix: resolve bugs and dependency issue found in code review
+
+- Remove react-beautiful-dnd (unused, broke npm install)
+- Fix case-sensitive username search
+- Fix engagement rate calculation (was *10000, should be *100)
+- Fix mislabeled Engagements stat
+- Remove duplicate formatter functions
+- Add missing alt attributes
+- Fix keyboard accessibility on profile cards
+- Fix non-responsive fixed-width card
+- Remove dead SearchBar component and debug leftovers
